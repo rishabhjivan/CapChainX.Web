@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">Connect your Ledger Wallet to access your tokens</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <div class="sprite sprite-ledger m-auto"></div>
+  <p>Then click on the button below to continue</p>
+</div>
+<div class="modal-footer text-center">
+  <button type="button" class="btn btn-primary" (click)="connect()" *ngIf="!connecting">Connect</button>
+  <button type="button" class="btn btn-primary" *ngIf="connecting" disabled>Connecting...</button>
+</div>

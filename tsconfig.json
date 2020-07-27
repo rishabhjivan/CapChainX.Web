@@ -1,0 +1,32 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "baseUrl": "src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@alerts/*": ["app/modules/alerts/*"],
+      "@auth/*": ["app/modules/auth/*"],
+      "@dashboard/*": ["app/modules/dashboard/*"],
+      "@ledger/*": ["app/modules/ledger/*"],
+      "@mockapi/*": ["app/modules/mock-api/*"],
+      "@shared/*": ["app/modules/shared/*"],
+      "@tokens/*": ["app/modules/tokens/*"],
+      "@wallet/*": ["app/modules/wallet/*"],
+      "@env/*": ["environments/*"]
+    }
+  }
+}

@@ -1,0 +1,186 @@
+<section>
+  <h2>Let's setup your ICO</h2>
+  <form name="createIco" #createIco="ngForm">
+    <div *ngIf="!loading && !creatingIco && !transferringTokens && !saleComplete">
+      <div class="form-group row">
+        <label for="raiseAmount" class="col-md-4 col-form-label"><span class="circular">1</span> How much do you want to raise?</label>
+        <div class="col-md-8">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <div class="input-group-text">$</div>
+            </div>
+            <input type="number" [(ngModel)]="model.amount_to_raise" name="raiseAmount" #raiseAmount="ngModel" class="form-control" id="raiseAmount" placeholder="0.00" aria-label="How much do you want to raise?" required pattern="\d+(\.\d+)?">
+          </div>
+          <validation-feedback [field]="raiseAmount" msgRequired="Amount is required!" msgPattern="Amount must be a number!"></validation-feedback>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="sellAmount" class="col-md-4 col-form-label"><span class="circular">2</span> How many tokens do you want to sell?</label>
+        <div class="col-md-8">
+          <div class="input-group">
+            <input type="number" [(ngModel)]="model.num_tokens_for_sale" name="sellAmount" #sellAmount="ngModel" class="form-control" id="sellAmount" placeholder="0.00" required pattern="\d+(\.\d+)?">
+            <div class="input-group-append">
+              <div class="input-group-text" *ngIf="company && company.token">{{company.token.ticker}}</div>
+            </div>
+          </div>
+          <validation-feedback [field]="sellAmount" msgRequired="Number of tokens is required!" msgPattern="Number of tokens must be a number!"></validation-feedback>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="duration" class="col-md-4 col-form-label"><span class="circular">3</span> What's the duration of your sale?</label>
+        <div class="col-md-8">
+          <div class="clearfix">
+            <div class="dp-col">
+              <div class="date-picker-group" (clickOutside)="dfrom.close()">
+                <input type="text" class="form-control" [(ngModel)]="model.start_date" #durationFrom="ngModel" placeholder="From" name="durationFrom" ngbDatepicker #dfrom="ngbDatepicker" (ngModelChange)="startDateSelected($event)" readonly required>
+                <button class="btn btn-icon" (click)="dfrom.toggle()" type="button">
+                  <i class="far fa-calendar-alt"></i>
+                </button>
+              </div>
+              <validation-feedback [field]="durationFrom" msgRequired="From date is required!"></validation-feedback>
+            </div>
+            <div class="arrow-col text-center"><i class="fa fa-arrow-right fa-2x to-arrow"></i></div>
+            <div class="dp-col">
+              <div class="date-picker-group" (clickOutside)="dto.close()">
+                <input type="text" class="form-control" [(ngModel)]="model.end_date" #durationTo="ngModel" placeholder="To" name="durationTo" ngbDatepicker #dto="ngbDatepicker" (ngModelChange)="endDateSelected($event)" readonly required>
+                <button class="btn btn-icon" (click)="dto.toggle()" type="button">
+                  <i class="far fa-calendar-alt"></i>
+                </button>
+              </div>
+              <validation-feedback [field]="durationTo" msgRequired="To date is required!"></validation-feedback>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="auctionType" class="col-md-12 col-form-label"><span class="circular">4</span> In what type of auction do you want to sell your tokens?</label>
+        <div class="col-md-12">
+          <div class="sink-2">
+            <div class="row">
+              <div class="col-md-4">
+                <button class="panel panel-pricing relative-wrapper" (click)="onSaleTypeClick('constant', createIco.form)" [ngClass]="{'active':model.token_sale_type=='constant'}">
+                  <div class="sprite sprite-const-price"></div>
+                  <label>Constant Price</label>
+                  <div class="overlay" *ngIf="model.token_sale_type=='constant' && fetchingSaleType">
+                    <div class="center-container text-center">
+                      <message-spinner message=""></message-spinner>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button class="panel panel-pricing disabled relative-wrapper" disabled (click)="onSaleTypeClick('geometric', createIco.form)" [ngClass]="{'active':model.token_sale_type=='geometric'}">
+                  <div class="sprite sprite-expo-price"></div>
+                  <label>Exponential Pricing</label>
+                  <div class="overlay" *ngIf="model.token_sale_type=='geometric' && fetchingSaleType">
+                    <div class="center-container text-center">
+                      <message-spinner message=""></message-spinner>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              <div class="col-md-4">
+                <button class="panel panel-pricing relative-wrapper" (click)="onSaleTypeClick('tiered', createIco.form)" [ngClass]="{'active':model.token_sale_type=='tiered'}">
+                  <div class="sprite sprite-tiered-price"></div>
+                  <label>Tiered Pricing</label>
+                  <div class="overlay" *ngIf="model.token_sale_type=='tiered' && fetchingSaleType">
+                    <div class="center-container text-center">
+                      <message-spinner message=""></message-spinner>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sink-1" *ngIf="model.token_sale_type && !fetchingSaleType && icoFormPosted">
+        <div class="row" *ngIf="model.token_sale_type=='constant'">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="suggestedPrice" class="col-md-3 col-form-label">Suggested Token Price <i class="fa fa-question-circle" placement="top" ngbTooltip="Our suggested token price based on the amount you want to raise. Feel free to customize this to your liking."></i></label>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                  </div>
+                  <input type="number" [(ngModel)]="model.token_price" #suggestedPrice="ngModel" name="suggestedPrice" class="form-control" id="suggestedPrice" placeholder="0.00" aria-label="Suggested Token Price" required pattern="\d+(\.\d+)?">
+                </div>
+                <validation-feedback [field]="suggestedPrice" msgRequired="Suggested Token Price is required!" msgPattern="Suggested Token Price must be a number!"></validation-feedback>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="model.token_sale_type=='geometric'">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="recomMult" class="col-md-3 col-form-label">Recommended Multiplier <i class="fa fa-question-circle" placement="top" ngbTooltip="Our recommended multiplier is based on the amount you want to raise. Feel free to customize this to your liking."></i></label>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <input type="number" [(ngModel)]="model.recomMult" #recomMult="ngModel" name="recomMult" class="form-control" id="recomMult" placeholder="0.00" aria-label="Recommended Multiplier" required pattern="\d+(\.\d+)?">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary input-group-btn"><i class="fa fa-arrow-right"></i></button>
+                  </div>
+                </div>
+                <validation-feedback [field]="recomMult" msgRequired="Recommended Multiplier is required!" msgPattern="Recommended Multiplier must be a number!"></validation-feedback>
+              </div>
+            </div>
+            <pricing-schedule saleType="geometric" count="5" step="1" priceLabel="Token Price" soldLabel="Tokens Sold"></pricing-schedule>
+          </div>
+        </div>
+        <div class="row" *ngIf="model.token_sale_type=='tiered'">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <label for="numRounds" class="col-md-3 col-form-label">How many rounds? <i class="fa fa-question-circle" placement="top" ngbTooltip="This is the number of discount rounds to create for the Tiered Pricing. Feel free to customize this to your liking."></i></label>
+              <div class="col-md-4">
+                <div class="input-group input-group-short">
+                  <input type="number" [(ngModel)]="model.num_rounds" #numRounds="ngModel" name="numRounds" class="form-control" id="numRounds" placeholder="0" aria-label="Recommended Multiplier" required pattern="\d+?" customMin="2" customMax="10" (keydown.enter)="updateNumRounds(createIco.form)">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary input-group-btn" (click)="updateNumRounds(createIco.form)" [disabled]="fetchingSaleType"><i class="fa fa-arrow-right"></i></button>
+                  </div>
+                </div>
+                <validation-feedback [field]="numRounds" msgRequired="Number of rounds is required!" msgPattern="Number of rounds must be a whole number!" msgMin="Number of rounds must be between 2 and 10" msgMax="Number of rounds must be between 2 and 10"></validation-feedback>
+              </div>
+            </div>
+            <pricing-schedule (onSave)="onTieredSave($event)" [endDate]="model.end_date" saleType="tiered" editable="true" count="5" step="1" priceLabel="Token Price" dateLabel="Round Date" soldLabel="Tokens Sold" [saleTiers]="model.token_sale_tiers"></pricing-schedule>
+          </div>
+        </div>
+        <div class="row" *ngIf="behavior">
+          <div class="col-md-12">
+            <div class="card small">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5 class="card-title">Expected Raise</h5>
+                    <div class="card-amount">{{behavior.estimated_raise | currency:'USD'}}</div>
+                  </div>
+                  <div class="col-md-6">
+                    <h5 class="card-title">Maximum Raise</h5>
+                    <div class="card-amount">{{behavior.max_raise | currency:'USD'}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix buttons-container">
+        <div class="pull-right">
+          <button class="btn btn-primary" (click)="doSetup(createIco.form)">Complete ICO Setup</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="creatingIco">
+      <token-wait waitMessage="Please wait as we finalize your ICO setup..."  [txHash]="creationHash"></token-wait>
+    </div>
+    <div *ngIf="transferringTokens">
+      <token-wait waitMessage="Please wait while we transfer your tokens to the sale contract..."  [txHash]="transferHash"></token-wait>
+    </div>
+    <div *ngIf="loading">
+      <token-wait waitMessage="Loading..."></token-wait>
+    </div>
+  </form>
+</section>
+<ng-template #ledgerConfirmBlock>
+  <app-ledger-confirm-trx></app-ledger-confirm-trx>
+</ng-template>

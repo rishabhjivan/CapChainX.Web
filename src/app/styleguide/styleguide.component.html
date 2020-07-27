@@ -1,0 +1,342 @@
+<section>
+  <span class="title">H1-H6</span>
+  <div class="row">
+    <div class="col-md-12">
+      <h1>h1. (32px / 3.2rem)</h1>
+      <h2>h2. (24px / 2.4rem)</h2>
+      <h3>h3. (20px / 2rem)</h3>
+      <h4>h4. (18px / 1.8rem)</h4>
+      <h5>h5. (16px / 1.6rem)</h5>
+      <h6>h6. (14px / 1.4rem)</h6>
+      <small>Small Text. (12px / 1.2rem)</small>
+    </div>
+  </div>
+</section>
+<section>
+  <span class="title">Form Fields</span>
+  <form>
+    <div class="form-group row">
+      <label for="staticEmail" class="col-md-3 col-form-label">No. of Tokens to Generate</label>
+      <div class="col-md-9">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword" class="col-md-3 col-form-label">Token Creation Charge</label>
+      <div class="col-md-9">
+        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-md-4">
+      <form>
+        <label for="">Label</label>
+        <input type="text" id="" placeholder="Placeholder" class="form-control" />
+        <label for="">Read Only</label>
+        <input type="text" id="" placeholder="Placeholder" class="form-control" readonly />
+        <label for="">Disabled</label>
+        <input type="text" id="" placeholder="Placeholder" class="form-control" disabled />
+        <label for="">Input + Label</label>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="sr-only" for="inlineFormInputGroup">Input Name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">@</div>
+              </div>
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Name">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="sr-only" for="inlineFormInputGroup">PPC</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="PPC">
+              <div class="input-group-append">
+                <div class="input-group-text">PPC</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <label for="">Input + Button</label>
+        <div class="row">
+          <div class="col-md-12">
+            <label class="sr-only" for="inlineFormInputGroup">Next</label>
+            <div class="input-group">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="PPC">
+              <div class="input-group-append">
+                <!--<div class="input-group-btn">&gt;</div>-->
+                <button class="btn btn-primary input-group-btn">&gt;</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <label for="">Input Upload</label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFile">
+          <label class="custom-file-label" for="customFile">Choose file</label>
+        </div>
+        <label for="">Input Upload Valid</label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFile">
+          <label class="custom-file-label ng-touched ng-valid" for="customFile">Choose file</label>
+        </div>
+        <label for="">Input Upload Error</label>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="customFile">
+          <label class="custom-file-label ng-touched ng-invalid" for="customFile">Choose file</label>
+        </div>
+        <label for="">Textarea</label>
+        <textarea id="" placeholder="Placeholder" class="form-control"></textarea>
+        <label for="">Textarea Read Only</label>
+        <textarea id="" placeholder="Placeholder" class="form-control" readonly></textarea>
+        <label for="">Validated Input</label>
+        <input type="text" id="" placeholder="Placeholder" class="form-control ng-touched ng-valid" value="JSmith" />
+        <label for="">Validated &amp; Hidden Input</label>
+        <input type="password" id="" placeholder="Placeholder" class="form-control ng-touched ng-valid" value="abcd" />
+        <label for="">Invalid Input</label>
+        <input type="text" id="" placeholder="Placeholder" class="form-control ng-touched ng-invalid" value="JSmith" />
+        <label for="dropdownMenuButton">Dropdown</label>
+        <div class="dropdown">
+          <button class="btn btn-tertiary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Item 1</a>
+            <a class="dropdown-item" href="#">Item 2</a>
+            <a class="dropdown-item" href="#">Item 3</a>
+          </div>
+        </div>
+        <label for="dropdownMenuButton">Dropdown Disabled</label>
+        <div class="dropdown">
+          <button class="btn btn-tertiary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+            Dropdown
+          </button>
+        </div>
+        <label for="dropdownMenuButton">Dropdown Open</label>
+        <div class="dropdown">
+          <button class="btn btn-tertiary dropdown-toggle active" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </button>
+          <div class="dropdown-menu show" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Dropdown Item 1</a>
+            <a class="dropdown-item" href="#">Dropdown Item 2</a>
+            <a class="dropdown-item" href="#">Dropdown Item 3</a>
+          </div>
+        </div>
+        <div style="padding-bottom:130px"></div>
+        <label for="dropdownMenuButton">Dropdown With Checkboxes</label>
+        <div class="dropdown">
+          <button class="btn btn-tertiary dropdown-toggle active" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </button>
+          <div class="dropdown-menu show" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Dropdown Item 1</a>
+            <a class="dropdown-item" href="#">Dropdown Item 2</a>
+            <a class="dropdown-item" href="#">Dropdown Item 3</a>
+          </div>
+        </div>
+        <div style="padding-bottom:130px"></div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+          <label class="custom-control-label" for="customRadio1">Unselected</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" checked="checked">
+          <label class="custom-control-label" for="customRadio2">Selected</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" disabled>
+          <label class="custom-control-label" for="customRadio3">Disabled</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customChk">
+          <label class="custom-control-label" for="customChk">Remember my preference</label>
+        </div>
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" id="customChk2" disabled>
+          <label class="custom-control-label" for="customChk2">Disabled</label>
+        </div>
+        <div class="form-group">
+          <div class="date-picker-group">
+            <input type="text" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+            <button class="btn btn-icon" (click)="d.toggle()" type="button">
+              <i class="far fa-calendar-alt"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<section>
+  <span class="title">Buttons</span>
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-primary btn-fill">Primary Button Fill Width</button>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <button class="btn btn-primary">Primary Button</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary active">Primary Active</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-primary" disabled>Primary Disabled</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-secondary btn-fill">Secondary Button Fill Width</button>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <button class="btn btn-secondary">Secondary Button</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-secondary active">Secondary Active</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-secondary" disabled>Secondary Disabled</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <button class="btn btn-tertiary btn-fill">Tertiary Button Fill Width</button>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+          <button class="btn btn-tertiary">Tertiary Button</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-tertiary active">Tertiary Active</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-tertiary" disabled>Tertiary Disabled</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <span class="title">Cards</span>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Ether Balance</h5>
+          <div class="card-amount"><span class="blue">0</span> ETH</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="title">Split Cards</span>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="card-title">Ether Balance</h5>
+              <div class="card-amount">200,000</div>
+            </div>
+            <div class="col-md-6">
+              <h5 class="card-title">Ether Balance</h5>
+              <div class="card-amount"><span class="green">20M</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="title">Split Cards Small</span>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card small">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h5 class="card-title">Ether Balance</h5>
+              <div class="card-amount">200,000</div>
+            </div>
+            <div class="col-md-6">
+              <h5 class="card-title">Ether Balance</h5>
+              <div class="card-amount"><span class="green">20M</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <span class="title">Modals</span>
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">Modal title</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>One fine body&hellip;</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-tertiary" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>
+  <div>
+    <button class="btn btn-primary" (click)="openInline(content)">Launch inline modal</button>
+  </div>
+  <div>
+    <button class="btn btn-primary" (click)="open()">Launch component modal</button>
+  </div>
+</section>
+<section>
+  <span class="title">Lists</span>
+  <ol>
+    <li>Item 1</li>
+    <li>Item 2</li>
+  </ol>
+  <span class="circular">1</span>
+</section>
+<section>
+  <span class="title">Grid</span>
+  <table class="table table-bordered">
+    <!--<thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>-->
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Sending 10,000 PPC to 0x6fa8a5179987991d0837B014C4A4AFe3C93745E4</td>
+        <td>In Progress</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Sent 10,000 PPC to 0x6fa8a5179987991d0837B014C4A4AFe3C93745E4</td>
+        <td>Yesterday</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Sent 8.29 ETH to 0xB2ce28AAa9136A47dCbcBe4f320FF363E6e746DD</td>
+        <td>Monday</td>
+      </tr>
+    </tbody>
+  </table>
+</section>

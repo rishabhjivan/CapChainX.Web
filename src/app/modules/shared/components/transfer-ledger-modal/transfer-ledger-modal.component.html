@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">You'll be transferring {{transferAmount | number}} tokens to the sale contract</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <div class="sprite sprite-ledger-transfer m-auto"></div>
+  <p>Click the button below to initiate the transfer</p>
+</div>
+<div class="modal-footer text-center">
+  <button type="button" class="btn btn-primary" (click)="activeModal.close()">Transfer Tokens</button>
+</div>

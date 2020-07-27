@@ -1,0 +1,18 @@
+<app-alerts></app-alerts>
+<div *ngIf="isSignedIn(); then secureBlock; else signInBlock"></div>
+<ng-template #signInBlock>
+  <router-outlet></router-outlet>
+</ng-template>
+<ng-template #secureBlock>
+  <div class="app-container">
+    <div class="wrapper-menu">
+      <app-menu></app-menu>
+    </div>
+    <div class="wrapper-content">
+      <app-header></app-header>
+      <router-outlet></router-outlet>
+      <div class="footer-padding"></div>
+      <app-footer></app-footer>
+    </div>
+  </div>
+</ng-template>

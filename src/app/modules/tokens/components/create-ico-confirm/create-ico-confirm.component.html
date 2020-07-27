@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">Are you sure you want to proceed?</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <p>By clicking Yes, you confirm that all data you have entered are correct and final. Once the ICO has been processed it cannot be modified.</p>
+</div>
+<div class="modal-footer text-center">
+  <button type="button" class="btn btn-tertiary" (click)="activeModal.dismiss()">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="activeModal.close()">Yes</button>
+</div>

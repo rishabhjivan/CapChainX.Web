@@ -1,0 +1,248 @@
+.progress-indicator {
+  height: .8rem;
+  background: $neutral-shade-5;
+  margin: 2rem 1rem;
+  position: relative;
+  .completion-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: $secondary-colour-1;
+    height: .8rem;
+  }
+  .progress-step {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    border-radius: 50%;
+    background: $white;
+    border: .4rem solid $neutral-shade-5;
+    height: 2.5rem;
+    width: 2.5rem;
+    transform: translate(-1.25rem, -.8rem);
+    &.active {
+      background: $secondary-colour-1;
+    }
+    &.completed {
+      border: .4rem solid $secondary-colour-1;
+      i {
+        color: $secondary-colour-1;
+        position: relative;
+        &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          margin-top: -1.45rem;
+          font-size: 1.2rem;
+          margin-left: .25rem;
+        }
+      }
+    }
+  }
+}
+
+.pricing-indicator {
+  height: .3rem;
+  background: $neutral-shade-1;
+  margin: 5rem 4rem;
+  position: relative;
+  font-family: $primary-font-bold;
+  .top-figure, .bottom-figure {
+    position: absolute;
+    left: 0;
+    margin-left: -3.8rem;
+    width: 9rem;
+    text-align: center;
+    &.text-sub, .text-sub {
+      font-size: 1rem;
+      color: $neutral-shade-1;
+    }
+  }
+  .center-figure {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: -2.5rem;
+    transform: translateX(-50%);
+    width: auto;
+    margin: 0;
+    &.edit-mode {
+      top: -3.2rem;
+      width: 8rem;
+    }
+  }
+  .bottom-figure {
+    color: $primary-colour-3;
+    font-size: 1.4rem;
+    &.edit-mode {
+      left: .8rem;
+      width: 7.5rem;
+    }
+  }
+  .pricing-step {
+    position: absolute;
+    top: 0;
+    border-radius: 50%;
+    background: $white;
+    border: .2rem solid $neutral-shade-1;
+    height: 1.8rem;
+    width: 1.8rem;
+    transform: translate(-.9rem, -.7rem);
+    .inner-dot {
+      border-radius: 50%;
+      background: $primary-colour-3;
+      margin: .2rem;
+      height: 1rem;
+      width: 1rem;
+    }
+    .top-figure {
+      top: -4rem;
+      &.edit-mode {
+        top: -4.5rem;
+      }
+    }
+    .bottom-figure {
+      top: .3rem;
+      &.edit-mode {
+        top: .6rem;
+      }
+    }
+  }
+  .price-start-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $neutral-shade-1;
+    border: none;
+    height: 1rem;
+    width: 1rem;
+    transform: translate(-.4rem, -.35rem);
+    .top-figure, .bottom-figure {
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+    .top-figure {
+      top: -2rem;
+    }
+    .bottom-figure {
+      top: 1.5rem;
+    }
+  }
+}
+
+.sales-indicator {
+  height: .5rem;
+  background: $neutral-shade-5;
+  margin: 3rem 4rem 4.5rem 4rem;
+  position: relative;
+  font-family: $primary-font-bold;
+  .completion-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background: $gradient-5;
+    height: .5rem;
+    &.in-progress {
+      width: 50%;
+    }
+    &.completed {
+      width: 100%;
+    }
+  }
+  .text-display {
+    position: absolute;
+    left: 0;
+    margin-left: -3.8rem;
+    width: 9rem;
+    text-align: center;
+  }
+  .sales-step {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    .text-display {
+      font-size: 1.4rem;
+      text-transform: uppercase;
+    }
+    &.sales-start-step {
+      left: 0;
+      border: none;
+      height: 1.6rem;
+      width: 1.6rem;
+      transform: translate(-.6rem, -.6rem);
+      &.inactive {
+        background: $neutral-shade-5;
+        .text-display {
+          color: $neutral-shade-5;
+        }
+      }
+      &.active {
+        background: $neutral-shade-1;
+      }
+      .text-display {
+        top: 2rem;
+      }
+    }
+    &.sales-mid-step {
+      left: 50%;
+      background: transparent;
+      border: none;
+      transform: translate(-.6rem, -.6rem);
+      .triangle {
+        width: 0; 
+        height: 0; 
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid $primary-colour-3;
+        margin-top: -.5rem;
+      }
+      .text-display {
+        color: $primary-colour-3;
+        top: -2.5rem;
+      }
+    }
+    &.sales-end-step {
+      left: 100%;
+      z-index: 2;
+      border-radius: 50%;
+      background: $white;
+      border: .4rem solid $neutral-shade-5;
+      height: 2.5rem;
+      width: 2.5rem;
+      transform: translate(-1.25rem, -1rem);
+      i {
+        position: relative;
+        &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          margin-top: -1.5rem;
+          font-size: 1.2rem;
+          margin-left: .25rem;
+        }
+      }
+      &.active, &.inactive {
+        border: .4rem solid $neutral-shade-5;
+        i {
+          color: $neutral-shade-5;
+        }
+      }
+      &.inactive {
+        .text-display {
+          color: $neutral-shade-5;
+        }
+      }
+      &.completed {
+        border: .4rem solid $gradient-colour-2;
+        i {
+          color: $gradient-colour-2;
+        }
+        .text-display {
+          color: $gradient-colour-2;
+        }
+      }
+    }
+  }
+}

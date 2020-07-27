@@ -1,0 +1,12 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2018 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="wallet" unicode="&#xe800;" d="M734 100l0 0c-48 0-87 39-87 87v144c0 48 39 87 87 87h227c1 0 3 0 4 0v144c0 37-30 67-67 67h-831c-37 0-67-30-67-67v-606c0-37 30-67 67-67h831c37 0 67 30 67 67v144c-1 0-3 0-4 0h-227z m227 270h-227c-21 0-39-17-39-39v-144c0-22 18-39 39-39h227c21 0 39 17 39 39v144c0 22-18 39-39 39z m-149-168c-31 0-56 26-56 57s25 57 56 57c32 0 57-26 57-57 0-31-25-57-57-57z m-31 549c-15 46-64 70-109 55l-341-112h469l-19 57z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

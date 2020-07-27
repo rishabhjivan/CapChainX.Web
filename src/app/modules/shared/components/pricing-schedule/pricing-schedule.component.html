@@ -1,0 +1,51 @@
+<div class="panel panel-schedule">
+  <div class="inner">
+    <h3>Pricing Schedule</h3>
+    <div class="pricing-indicator">
+      <div class="price-start-step">
+        <div class="relative-wrapper">
+          <div class="top-figure">{{priceLabel}}</div>
+          <div class="bottom-figure">
+            <span class="blue block" *ngIf="dateLabel">{{dateLabel}}</span>
+            <span class="text-sub" *ngIf="dateLabel">or </span><span [ngClass]="{'text-sub':dateLabel}">{{soldLabel}}</span>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let s of stepArray">
+        <div class="center-figure" [ngStyle]="{'left': s.posmid + '%'}" [ngClass]="{'edit-mode':inEdit}" *ngIf="s.discount">
+          <span *ngIf="!inEdit">{{s.discount | currency:'USD'}}</span>
+          <div *ngIf="inEdit" class="input-group input-group-sm">
+            <div class="input-group-prepend">
+              <div class="input-group-text">$</div>
+            </div>
+            <input type="number" [(ngModel)]="s.discount" name="discount" #discount="ngModel" class="form-control input-sm" id="discount" placeholder="0.00" aria-label="Discount amount" required pattern="\d+(\.\d+)?">
+          </div>
+        </div>
+        <div class="pricing-step" [ngClass]="{'active':s.step==step}" [ngStyle]="{'left': s.posleft + '%'}">
+          <div class="inner-dot"></div>
+          <div class="relative-wrapper">
+            <div class="top-figure" [ngClass]="{'edit-mode':inEdit}" *ngIf="s.price">{{s.price | currency:'USD'}}</div>
+            <div class="bottom-figure" [ngClass]="{'edit-mode':inEdit}" *ngIf="s.supply || s.date">
+              <span class="blue block" *ngIf="s.date && !inEdit"><span class="text-uppercase">{{s.date | shortDate}}</span><span class="text-sub" *ngIf="s.supply"> or</span></span>
+              <span class="block" *ngIf="inEdit">
+                <div class="date-picker-group date-picker-sm date-picker-use-label" (clickOutside)="sdate.close()">
+                  <label class="date-alt-label">{{s.date | shortDate}}</label>
+                  <input type="text" class="form-control input-sm" [(ngModel)]="s.date" #date="ngModel" placeholder="From" name="sdate" ngbDatepicker placement="top" #sdate="ngbDatepicker" readonly>
+                  <button class="btn btn-icon" (click)="sdate.toggle()" type="button">
+                    <i class="far fa-calendar-alt"></i>
+                  </button>
+                </div>
+              </span>
+              <span class="block" [ngClass]="{'text-sub': s.date}" *ngIf="s.supply && !inEdit">{{s.supply | number}} <span *ngIf="saleType=='tiered'">sold</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-actions">
+    <button (click)="doEdit()" *ngIf="editable && !inEdit" class="btn btn-tertiary btn-sm pull-right">edit</button>
+    <button (click)="onSaveClick()" *ngIf="editable && inEdit" class="btn btn-primary btn-sm pull-right">save</button>
+    <button (click)="cancelEdit()" *ngIf="editable && inEdit" class="btn btn-tertiary btn-sm pull-right">cancel</button>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div *ngIf="loading; then waitBlock; else mainBlock"></div>
+<ng-template #mainBlock>
+  <section>
+    <h2>Company Wallet</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h5 class="card-title">Available Tokens</h5>
+                <div class="card-amount"><span class="green">{{wallet.token_balance | number}}</span> {{company.token.ticker}}</div>
+                <div class="card-extra">&nbsp;</div>
+                <div class="buttons-panel">
+                  <button (click)="sendTokens()" class="btn btn-secondary">Send {{company.token.ticker}}</button>
+                  <button (click)="receiveTokens()" class="btn btn-secondary">Receive {{company.token.ticker}}</button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h5 class="card-title">Ether Balance</h5>
+                <div class="card-amount"><span class="blue">{{wallet.eth_balance | number}}</span> ETH</div>
+                <div class="card-extra">= $ {{wallet.eth_balance_usd | number}}</div>
+                <div class="buttons-panel">
+                  <button (click)="sendEther()" class="btn btn-primary">Send ETH</button>
+                  <button (click)="receiveEther()" class="btn btn-primary">Receive ETH</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Transaction History</h2>
+    <table class="table table-bordered vertical-align-middle">
+      <tbody>
+        <tr *ngFor="let t of transactions; let i = index">
+          <td class="icon-col"><div class="sprite sprite-trx" [ngClass]="{
+            'tokens-sent':t.currency!='ETH' && t.status==getTransactionStatusLabel('SUCCESS') && t.from_address.toLowerCase()==walletAddr.toLowerCase(),
+            'tokens-received':t.currency!='ETH' && t.status==getTransactionStatusLabel('SUCCESS') && t.to_address.toLowerCase()==walletAddr.toLowerCase(),
+            'eth-sent':t.currency=='ETH' && t.status==getTransactionStatusLabel('SUCCESS') && t.from_address.toLowerCase()==walletAddr.toLowerCase(),
+            'eth-received':t.currency=='ETH' && t.status==getTransactionStatusLabel('SUCCESS') && t.to_address.toLowerCase()==walletAddr.toLowerCase(),
+            'send-progress':t.status!=getTransactionStatusLabel('SUCCESS') && t.from_address.toLowerCase()==walletAddr.toLowerCase(),
+            'receive-progress':t.status!=getTransactionStatusLabel('SUCCESS') && t.to_address.toLowerCase()==walletAddr.toLowerCase()
+          }"></div></td>
+          <td *ngIf="t.status!=getTransactionStatusLabel('SUCCESS') && t.from_address.toLowerCase()==walletAddr.toLowerCase()">Sending <span class="strong" [ngClass]="{'blue':t.currency=='ETH','green':t.currency!='ETH'}">{{t.value}} {{t.currency}}</span> to <a [href]="etherScanHistoryUrl + t.tx_hash" target="_blank"><span class="blue">{{t.to_address}}</span></a></td>
+          <td *ngIf="t.status!=getTransactionStatusLabel('SUCCESS') && t.to_address.toLowerCase()==walletAddr.toLowerCase()">Receiving <span class="strong" [ngClass]="{'blue':t.currency=='ETH','green':t.currency!='ETH'}">{{t.value}} {{t.currency}}</span> from <a [href]="etherScanHistoryUrl + t.tx_hash" target="_blank"><span class="blue">{{t.from_address}}</span></a></td>
+          <td *ngIf="t.status==getTransactionStatusLabel('SUCCESS') && t.from_address.toLowerCase()==walletAddr.toLowerCase()">Sent <span class="strong" [ngClass]="{'blue':t.currency=='ETH','green':t.currency!='ETH'}">{{t.value}} {{t.currency}}</span> to <a [href]="etherScanHistoryUrl + t.tx_hash" target="_blank"><span class="blue">{{t.to_address}}</span></a></td>
+          <td *ngIf="t.status==getTransactionStatusLabel('SUCCESS') && t.to_address.toLowerCase()==walletAddr.toLowerCase()">Received <span class="strong" [ngClass]="{'blue':t.currency=='ETH','green':t.currency!='ETH'}">{{t.value}} {{t.currency}}</span> from <a [href]="etherScanHistoryUrl + t.tx_hash" target="_blank"><span class="blue">{{t.from_address}}</span></a></td>
+          <td *ngIf="t.status==getTransactionStatusLabel('IN_PROGRESS')" class="text-right text-red">In Progress...</td>
+          <td *ngIf="t.status==getTransactionStatusLabel('SUCCESS')" class="text-right text-capitalize text-light-gray">{{(t.timestamp * 1000) | amTimeAgo}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</ng-template>
+<ng-template #waitBlock>
+  <section>
+    <form>
+      <token-wait waitMessage="Loading. Please wait..."></token-wait>
+    </form>
+  </section>
+</ng-template>

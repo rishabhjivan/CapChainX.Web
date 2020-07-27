@@ -1,0 +1,137 @@
+<div *ngIf="deviceConnected; then sendBlock; else connectLedgerBlock"></div>
+<ng-template #connectLedgerBlock>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Plug in your Ledger Wallet to be able to send Ether &amp; Tokens</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true"><i class="fa fa-times"></i></span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <div class="sprite sprite-ledger m-auto"></div>
+    <p>In your Ledger, make sure Browser is turned ON under Ethereum > Settings</p>
+    <p>Click the button below when ready</p>
+  </div>
+  <div class="modal-footer text-center">
+    <button type="button" class="btn btn-primary" (click)="connectLedger()">Connect</button>
+  </div>
+</ng-template>
+<ng-template #connectMetamaskBlock>
+  <div class="modal-header">
+    <h4 class="modal-title text-center">Connect to Metamask to be able to send Ether &amp; Tokens</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+      <span aria-hidden="true"><i class="fa fa-times"></i></span>
+    </button>
+  </div>
+  <div class="modal-body text-center">
+    <div class="sprite sprite-metamask m-auto"></div>
+    <p>Make sure Metamask is enabled, then click on the button below</p>
+  </div>
+  <div class="modal-footer text-center">
+    <button type="button" class="btn btn-primary" (click)="connectMetamask()">Connect</button>
+  </div>
+</ng-template>
+<ng-template #sendBlock>
+  <div *ngIf="loading; then waitBlock; else sendFormBlock"></div>
+  <ng-template #sendFormBlock>
+    <div *ngIf="sending; then sendingBlock; else formBlock"></div>
+    <ng-template #formBlock>
+      <div class="modal-header">
+        <h4 class="modal-title">Send {{currency}} to another wallet</h4>
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+          <span aria-hidden="true"><i class="fa fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="sendTokens" #sendTokens="ngForm">
+          <div class="form-group">
+            <label class="sub-header" for="recipientAddress">Recipient Address</label>
+            <input type="text" [(ngModel)]="model.to_address" name="recipientAddress" #recipientAddress="ngModel" class="form-control" id="recipientAddress" placeholder="Recipient Address" aria-label="Recipient Address" required>
+            <validation-feedback [field]="recipientAddress" msgRequired="Address is required!"></validation-feedback>
+          </div>
+          <div class="form-group">
+            <label class="sub-header" for="sendAmount">Enter Amount to Send</label>
+            <div class="input-group">
+              <input type="number" [(ngModel)]="model.value" name="sendAmount" #sendAmount="ngModel" class="form-control" id="sendAmount" placeholder="0.00" aria-label="Enter Amount to Send" required pattern="\d+(\.\d+)?">
+              <div class="input-group-append">
+                <div class="input-group-text">{{currency}}</div>
+              </div>
+            </div>
+            <validation-feedback [field]="sendAmount" msgRequired="Amount is required!" msgPattern="Amount must be a number!"></validation-feedback>
+          </div>
+          <div class="form-group">
+            <label class="sub-header" for="minerFee">Miner Fee</label>
+            <div class="input-group">
+              <div class="input-group-input-wrapper form-control">
+                <input type="number" name="minerFee" class="form-control" id="minerFee" readonly [value]="trxParams.suggested_txn_fee_eth">
+                <label class="input-overlay-right"><i class="symbol-asymEq"></i> {{trxParams.suggested_txn_fee_usd | currency:'USD'}}</label>
+              </div>
+              <div class="input-group-append">
+                <div class="input-group-text">ETH</div>
+              </div>
+            </div>
+          </div>
+          <div class="m-t-20">
+            <button class="btn btn-link" (click)="showAdvanced=!showAdvanced">Advanced Options <i class="fa" [ngClass]="{'fa-caret-right': !showAdvanced, 'fa-caret-down': showAdvanced}"></i></button>
+          </div>
+          <div class="panel panel-advanced" *ngIf="showAdvanced">
+            <div class="form-group">
+              <label class="sub-header" for="gasLimit">Gas Limit</label>
+              <div class="input-group">
+                <input type="number" [(ngModel)]="model.gas_limit" name="gasLimit" #gasLimit="ngModel" class="form-control" id="gasLimit" placeholder="0" aria-label="Gas Limit" required pattern="\d+?">
+                <div class="input-group-append">
+                  <div class="input-group-text">GAS</div>
+                </div>
+              </div>
+              <validation-feedback [field]="gasLimit" msgRequired="Gas Limit is required!" msgPattern="Gas Limit must be a whole number!"></validation-feedback>
+            </div>
+            <div class="form-group">
+              <label class="sub-header" for="gasPrice">Gas Price</label>
+              <div class="input-group">
+                <input type="number" [(ngModel)]="model.gas_price" name="gasPrice" #gasPrice="ngModel" class="form-control" id="gasPrice" placeholder="0.00" aria-label="Gas Price" required pattern="\d+(\.\d+)?">
+                <div class="input-group-append">
+                  <div class="input-group-text">GWEI</div>
+                </div>
+              </div>
+              <validation-feedback [field]="gasPrice" msgRequired="Gas Price is required!" msgPattern="Gas Price must be a number!"></validation-feedback>
+            </div>
+            <div class="form-group">
+              <label class="sub-header" for="nonce">Nonce</label>
+              <input type="number" [(ngModel)]="model.nonce" name="nonce" #nonce="ngModel" class="form-control" id="nonce" placeholder="Nonce" aria-label="Nonce" required>
+              <validation-feedback [field]="nonce" msgRequired="Address is required!"></validation-feedback>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" *ngIf="!doConfirm">
+        <button type="button" class="btn btn-secondary" *ngIf="currency!='ETH'" (click)="confirmSend(sendTokens.form)">Send Tokens</button>
+        <button type="button" class="btn btn-primary" *ngIf="currency=='ETH'" (click)="confirmSend(sendTokens.form)">Send Ether</button>
+      </div>
+      <div class="modal-footer block clearfix" *ngIf="doConfirm">
+        <span>Are you sure? Please confirm.</span>
+        <button type="button" class="btn btn-secondary pull-right" *ngIf="currency!='ETH'" (click)="doSendTokens(sendTokens.form)">Yes, I Confirm</button>
+        <button type="button" class="btn btn-primary pull-right" *ngIf="currency=='ETH'" (click)="sendEther(sendTokens.form)">Yes, I Confirm</button>
+        <button type="button" class="btn btn-tertiary pull-right" (click)="doConfirm=false">No, Cancel</button>
+      </div>
+    </ng-template>
+    <ng-template #sendingBlock>
+      <div *ngIf="confirming; then ledgerConfirmBlock; else sendingBlockWait"></div>
+      <ng-template #ledgerConfirmBlock>
+        <app-ledger-confirm-trx></app-ledger-confirm-trx>
+      </ng-template>
+      <ng-template #sendingBlockWait>
+        <section>
+          <form>
+            <token-wait waitMessage="Sending {{currency}}. Please wait..."></token-wait>
+          </form>
+        </section>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+  <ng-template #waitBlock>
+    <section>
+      <form>
+        <token-wait waitMessage="Connecting to Ledger. Please Wait..."></token-wait>
+      </form>
+    </section>
+  </ng-template>
+</ng-template>

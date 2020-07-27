@@ -1,0 +1,23 @@
+<div *ngIf="field.errors && (field.dirty || field.touched)" class="validation-feedback invalid">
+  <div [hidden]="!field.errors.required">
+    {{msgRequired}}
+  </div>
+  <div [hidden]="!field.errors.pattern">
+    {{msgPattern}}
+  </div>
+  <div [hidden]="!field.errors.email">
+    {{msgEmail}}
+  </div>
+  <div [hidden]="!field.errors.url">
+    {{msgUrl}}
+  </div>
+  <div [hidden]="!field.errors.file">
+    {{msgFile}}
+  </div>
+  <div [hidden]="!field.errors.customMin">
+    {{msgMin}}
+  </div>
+  <div [hidden]="!field.errors.customMax">
+    {{msgMax}}
+  </div>
+</div>

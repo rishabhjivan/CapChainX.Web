@@ -1,0 +1,172 @@
+<div class="sink-3" *ngIf="company">
+  <div *ngIf="company.token; then tokensBlock; else noTokensBlock"></div>
+  <ng-template #noTokensBlock>
+    <section class="no-tokens-container">
+      <div class="center-container text-center">
+        <div class="sprite sprite-empty-state"></div>
+        <h3>No Tokens Yet</h3>
+        <p>Click the button below to create new tokens</p>
+        <button (click)="openWalletConfirm()" class="btn btn-primary">Create Cryptoequity Tokens</button>
+      </div>
+    </section>
+  </ng-template>
+  <ng-template #tokensBlock>
+    <section>
+      <h2><div class="row">
+        <div class="col-md-12">
+          Token Overview
+        </div>
+        <!--<div class="col-md-6 text-right">
+          <span class="status-text">Status: <span class="pill" [ngClass]="{'pill-success':company.token.status=='active'}">{{company.token.status}}</span></span>
+        </div>-->
+      </div></h2>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5 class="card-title">Total Supply</h5>
+                  <div class="card-amount font-sm">{{company.token.total_supply | shortNumber}} {{company.token.ticker}}</div>
+                </div>
+                <div class="col-md-6">
+                  <h5 class="card-title">Token Holders</h5>
+                  <div class="card-amount font-sm">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="clearfix">Wallet Balance<button (click)="openWalletModal()" class="btn btn-icon-fill pull-right position-relative" ngbTooltip="Wallet Address" placement="left"><div class="sprite sprite-qrcode center-container"></div></button></h2>
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5 class="card-title">Ether Balance</h5>
+                  <div class="card-amount font-sm">
+                    <span class="blue">{{wallet && wallet.eth_balance | number}}</span> ETH
+                    <em><i class="symbol-asymEq"></i> {{wallet && wallet.eth_balance_usd | currency:'USD'}}</em>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h5 class="card-title">Token Balance</h5>
+                  <div class="card-amount font-sm"><span class="green">{{wallet && wallet.token_balance | number}}</span> {{company.token.ticker}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="clearfix">Token Sales <span class="status-dot sub-header" *ngIf="company.token_sale_id && tokenSale" [ngClass]="{'inactive':tokenSale.status == 'ready', 'completed':tokenSale.status == 'completed' || tokenSale.status == 'finalize in progress' || tokenSale.status == 'finalized', 'active':tokenSale.status == 'in progress'}">{{tokenSale.status == 'ready' ? 'not started' : tokenSale.status == 'in progress' ? 'active' : tokenSale.status == 'completed' ? 'completed' : tokenSale.status == 'finalize in progress' ? 'Transfer in progress' : tokenSale.status == 'finalized' ? 'Completed and Transferred' : 'setup in progress' }}</span><button (click)="openTokenSaleModal()" class="btn btn-icon-fill pull-right position-relative" ngbTooltip="Sale Contract" placement="left"><div class="sprite sprite-contract center-container"></div></button></h2>
+          <div *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'creation in progress'" class="alert alert-warning">Deployment process has been paused.</div>
+          <div *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'needs tokens'" class="alert alert-warning">Setup has been paused. You need to assign tokens to the sale contract</div>
+          <div *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'token assignment in progress'" class="alert alert-warning">Token assignment process has been paused.</div>
+          <div *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'completed'" class="alert alert-success"><strong>Congratulations!</strong> Token sale has been completed.</div>
+          <div *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'finalize in progress'" class="alert alert-success">Finalize is in progress. Please wait...</div>
+          <!--<div *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'finalized'" class="alert alert-success">Completed and Transferred</div>-->
+          <sales-progress [tokenSale]="tokenSale"></sales-progress>
+          <div class="card">
+            <div class="card-overlay" *ngIf="!company.token_sale_id">
+              <div class="center-container text-center">
+                <h5 class="card-title">There are no active sales</h5>
+                <button (click)="goToICO()" class="btn btn-primary">Let's do an ICO</button>
+              </div>
+            </div>
+            <div class="card-overlay" *ngIf="company.token_sale_id && tokenSale && !tokenSale.setupComplete">
+              <div class="center-container text-center">
+                <h5 class="card-title">ICO setup has not yet completed</h5>
+                <button (click)="goToICO()" class="btn btn-primary">Continue</button>
+              </div>
+            </div>
+            <div class="card-overlay" *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'finalize in progress'">
+              <div class="center-container text-center">
+                <h5 class="card-title">Transfer is in progress</h5>
+              </div>
+            </div>
+            <div class="card-overlay" *ngIf="tokenSalesLoading">
+              <div class="center-container text-center">
+                <h5 class="card-title"><message-spinner message="Loading"></message-spinner></h5>
+              </div>
+            </div>
+            <!--<div class="card-overlay" *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'finalized'">
+              <div class="center-container text-center">
+                <h5 class="card-title">Completed and Transferred</h5>
+              </div>
+            </div>-->
+            <div class="card-body text-left">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-6 no-padding no-border text-center">
+                      <div *ngIf="chart">
+                        <canvas #canvas id="canvas">{{ chart }}</canvas>
+                      </div>
+                      <h5 class="card-title">Total Tokens</h5>
+                      <div class="card-amount font-sm">{{tokenSale && tokenSale.token_sale_params.num_tokens_for_sale | number}}</div>
+                    </div>
+                    <div class="col-md-6 no-padding">
+                      <h5 class="card-title status-dot dark-blue">Tokens Sold</h5>
+                      <div class="card-amount font-sm">{{tokenSale && tokenSale.tokensSold | number}}</div>
+                      <h5 class="card-title status-dot light-blue">Remaining Tokens</h5>
+                      <div class="card-amount font-sm">{{tokenSale && tokenSale.remaining_tokens | number}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <h5 class="card-title">Token Price</h5>
+                  <div class="card-amount font-sm" *ngIf="tokenSale && tokenSale.current_price">
+                    {{tokenSale && tokenSale.current_price | number}} ETH
+                    <em><i class="symbol-asymEq"></i> {{tokenSale && tokenSale.current_price_usd | currency: 'USD'}}</em>
+                  </div>
+                  <div class="card-amount font-sm" *ngIf="!tokenSale || !tokenSale.current_price">
+                    - -
+                  </div>
+                  <h5 class="card-title">Total Raised</h5>
+                  <div class="card-amount font-sm">
+                    <span class="blue">{{tokenSale && tokenSale.total_raised}}</span> ETH
+                    <em><i class="symbol-asymEq"></i> {{tokenSale && tokenSale.total_raised_usd | currency: 'USD'}}</em>
+                  </div>
+                  <button (click)="showLedgerConfirm=false;openModal(transferModal)" class="btn btn-primary" *ngIf="company.token_sale_id && tokenSale && tokenSale.status == 'completed'">Move to Wallet</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</div>
+
+<ng-template #transferModal let-c="close" let-d="dismiss">
+  <div class="modal-header" *ngIf="!showLedgerConfirm">
+    <h4 class="modal-title text-center" *ngIf="tokenFinalizeStatus=='Init'">You'll be moving {{tokenSale.remaining_tokens | number}} {{company.token.ticker}} and {{tokenSale.total_raised | number}} ETH back to your wallet</h4>
+    <h4 class="modal-title text-center" *ngIf="tokenFinalizeStatus=='Wait'">Please wait as we transfer your tokens</h4>
+    <h4 class="modal-title text-center" *ngIf="tokenFinalizeStatus=='Done'"><div class="sprite sprite-check m-auto"></div>Success</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d()" *ngIf="tokenFinalizeStatus!='Wait'">
+      <span aria-hidden="true"><i class="fa fa-times"></i></span>
+    </button>
+  </div>
+  <div class="modal-body text-center" *ngIf="!showLedgerConfirm">
+    <div class="sprite sprite-to-ledger-transfer m-auto sink-4" *ngIf="tokenFinalizeStatus!='Done'"></div>
+    <p *ngIf="tokenFinalizeStatus=='Init'">Connect your Ledger, then click the button below to initiate the transfer</p>
+    <message-spinner message="Transfer in progress" *ngIf="tokenFinalizeStatus=='Wait'"></message-spinner>
+    <div *ngIf="tokenFinalizeStatus=='Wait' && tokenSale.finalize_txnhash">
+      View detailed progress in Etherscan<br />
+      <div class="scan-link-wrapper"><a class="scan-link no-wrap middle-container" [href]="getEtherScanLink()" target="_blank">{{getEtherScanLink()}}</a></div>
+    </div>
+    <p *ngIf="tokenFinalizeStatus=='Done'">You have successfully transferred <strong>{{tokenSale.remaining_tokens | number}} {{company.token.ticker}}</strong> and <strong>{{tokenSale.total_raised | number}} ETH</strong> from the sale contract to your wallet</p>
+  </div>
+  <div class="modal-footer text-center" *ngIf="!showLedgerConfirm">
+    <button type="button" class="btn btn-primary" (click)="moveToWallet()" *ngIf="tokenFinalizeStatus=='Init'">Transfer</button>
+    <button type="button" class="btn btn-primary" disabled *ngIf="tokenFinalizeStatus=='Wait'">Transferring...</button>
+    <button type="button" class="btn btn-primary" (click)="c()" *ngIf="tokenFinalizeStatus=='Done'">Exit to Dashboard</button>
+  </div>
+  <div *ngIf="showLedgerConfirm"><app-ledger-confirm-trx></app-ledger-confirm-trx></div>
+</ng-template>

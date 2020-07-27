@@ -1,0 +1,75 @@
+<section>
+  <progress-indicator count="3" step="1"></progress-indicator>
+  <h2><strong>Token Setup - Step 1:</strong> Create Tokens</h2>
+  <form name="createTokens" #createTokens="ngForm">
+    <div [hidden]="creatingTokens || loadingTokens">
+      <h3>Token Details</h3>
+      <div class="form-group row">
+        <label for="tokenName" class="col-md-3 col-form-label">Token Name</label>
+        <div class="col-md-9">
+          <input type="text" [(ngModel)]="model.name" name="name" #name="ngModel" class="form-control-plaintext" id="tokenName" placeholder="Token Name" aria-label="Token Name" required>
+          <validation-feedback [field]="name" msgRequired="Token name is required!"></validation-feedback>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="tokenSymbol" class="col-md-3 col-form-label">Token Ticker Symbol</label>
+        <div class="col-md-9">
+          <input type="text" [(ngModel)]="model.ticker" name="ticker" #ticker="ngModel" class="form-control-plaintext" id="tokenSymbol" placeholder="Token Ticker Symbol" aria-label="Token Ticker Symbol" maxlength="4" required>
+          <validation-feedback [field]="ticker" msgRequired="Ticker symbol is required!"></validation-feedback>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="tokenizePct" class="col-md-3 col-form-label">Percent to Tokenize</label>
+        <div class="col-md-9">
+          <div class="input-group">
+            <input type="number" (ngModelChange)="setNumTokens($event)" [(ngModel)]="model.equity_percentage_to_tokenize" #equity_percentage_to_tokenize="ngModel" name="equity_percentage_to_tokenize" class="form-control" id="tokenizePct" placeholder="Percent of company to tokenize" aria-label="Percent of company to tokenize" required pattern="\d+(\.\d+)?">
+            <div class="input-group-append">
+              <div class="input-group-text">%</div>
+            </div>
+          </div>
+          <validation-feedback [field]="equity_percentage_to_tokenize" msgRequired="Percent to tokenize is required!" msgPattern="Percent to tokenize must be a number!"></validation-feedback>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="numTokens" class="col-md-3 col-form-label"># of Tokens to Generate</label>
+        <div class="col-md-9">
+          <input type="text" [(ngModel)]="numTokens" name="numTokens" readonly class="form-control-plaintext" id="numTokens" placeholder="# of Tokens to Generate" aria-label="No. of Tokens to Generate">
+        </div>
+      </div>
+      <h3>Payment Details</h3>
+      <div class="form-group row">
+        <label for="tokenCharge" class="col-md-3 col-form-label">Token Creation Charge</label>
+        <div class="col-md-9">
+          <span id="tokenCharge" class="green static-text" *ngIf="configs">{{configs.tokenization_fee | currency:'USD'}}</span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="cardNo" class="col-md-3 col-form-label">Credit/Debit Card No.</label>
+        <div class="col-md-9">
+          <!--<div class="input-group credit-card-group">
+            <input type="text" class="form-control-plaintext card-number" id="cardNo" placeholder="Enter Card Number" aria-label="Enter Card Number">
+            <input type="text" class="form-control-plaintext card-cvc" id="cardCvc" placeholder="CVC" aria-label="Card CVC">
+            <input type="text" class="form-control-plaintext card-expiry" id="cardExpiry" placeholder="MM/YY" aria-label="Card Expiry Date">
+          </div>-->
+          <ngx-stripe-card [options]="cardOptions"></ngx-stripe-card>
+          <div *ngIf="cardErrors" class="validation-feedback invalid">{{cardErrors.message}}</div>
+        </div>
+      </div>
+      <div class="clearfix buttons-container">
+        <div class="pull-right">
+          <button class="btn btn-primary pull-right" type="submit" (click)="doCreateTokens(createTokens.form)">Create Tokens</button>
+          <button class="btn btn-tertiary pull-right" (click)="cancelCreate()">Cancel</button>
+        </div>
+      </div>
+      <div class="text-center">
+        <p class="disclaimer">** Tokens will be created on Ethereum but will not be transferrable and sellable until verified from the appropriate legal documents. **</p>
+      </div>
+    </div>
+    <div *ngIf="creatingTokens">
+      <token-wait waitMessage="Creating your Tokens. Please wait..." [txHash]="tokenCreationHash"></token-wait>
+    </div>
+    <div *ngIf="loadingTokens">
+      <token-wait waitMessage="Loading. Please wait..."></token-wait>
+    </div>
+  </form>
+</section>

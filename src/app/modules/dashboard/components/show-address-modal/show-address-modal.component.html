@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">{{title}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body text-center">
+  <div class="text-center"><iframe [src]="'https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + walletAddr + '&choe=UTF-8' | safe" width="200" height="200" frameborder="0"></iframe></div>
+  <p *ngIf="caption">{{caption}}</p>
+  <h2>{{walletAddr}}</h2>
+</div>
+<div class="modal-footer text-center">
+  <button ngxClipboard [cbContent]="walletAddr" (cbOnSuccess)="onAddrCopied()" class="btn btn-icon-outline position-relative"><div class="sprite sprite-copy center-container"></div></button>
+  <a [href]="getEtherScanLink()" target="_blank" class="btn btn-icon-outline position-relative"><div class="sprite sprite-link center-container"></div></a>
+</div>

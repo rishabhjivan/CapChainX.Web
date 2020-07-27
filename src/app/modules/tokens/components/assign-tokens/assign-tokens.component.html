@@ -1,0 +1,66 @@
+<section>
+  <progress-indicator count="3" step="3"></progress-indicator>
+  <h2><strong>Token Setup - Step 3:</strong> Assign Tokens</h2>
+  <form name="assignTokens" #assignTokens="ngForm">
+    <div *ngIf="!loadingTokens && !assigningTokens && token">
+      <h3>Follow the steps below to properly assign your tokens</h3>
+      <div class="form-group">
+        <label for="keyProvider"><span class="circular">1</span> Choose a third-party key provider</label>
+        <div class="form-sink">
+          <!--<div class="custom-control custom-radio">
+            <input type="radio" value="MetaMask" [checked]="keyProvider=='MetaMask'" (change)="keyProvider='MetaMask'" id="keyProvider-MetaMask" name="keyProvider" class="custom-control-input">
+            <label class="custom-control-label" for="keyProvider-MetaMask">MetaMask</label>
+          </div>-->
+          <div class="custom-control custom-radio">
+            <input type="radio" value="LedgerNanoS" [checked]="keyProvider=='LedgerNanoS'" (change)="keyProvider='LedgerNanoS'" id="keyProvider-LedgerNanoS" name="keyProvider" class="custom-control-input">
+            <label class="custom-control-label" for="keyProvider-LedgerNanoS">Ledger Nano S</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="keyProvider=='LedgerNanoS'">
+        <label for="stepsLedger"><span class="circular">2</span> Enable your Ledger Nano S</label>
+        <div class="form-sink">
+          <ol>
+            <li>Purchase your Ledger Nano S (<a href="https://www.ledgerwallet.com/products/ledger-nano-s" target="_blank">https://www.ledgerwallet.com/products/ledger-nano-s</a>)</li>
+            <li>Plug in your Ledger Nano S</li>
+            <li>Open the Ethereum app on the Ledger Nano S</li>
+            <li>On the Ledger Nano S, go to “Settings” and turn on “Browser”</li>
+          </ol>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="keyProvider=='MetaMask'">
+        <label for="stepsLedger"><span class="circular">2</span> Enable your MetaMask</label>
+        <div class="form-sink">
+          <ol>
+            <li>Purchase your MetaMask (<a href="https://metamask.io/" target="_blank">https://metamask.io/</a>)</li>
+            <li>Plug in your MetaMask</li>
+            <li>Open the Ethereum app on the MetaMask</li>
+            <li>On the MetaMask, go to “Settings” and turn on “Browser”</li>
+          </ol>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="ethereumAddress"><span class="circular">3</span> Retrieve your Ethereum Address</label>
+        <div class="form-sink">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button class="btn btn-primary input-group-btn" (click)="retrieveAddress()">Retrieve</button>
+            </div>
+            <input type="text" class="form-control" id="ethereumAddress" [value]="ethereumAddress" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix buttons-container">
+        <div class="pull-right">
+          <button class="btn btn-primary" (click)="doAssignTokens(assignTokens.form)" [disabled]="!ethereumAddress">Assign Tokens</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="assigningTokens">
+      <token-wait waitMessage="Assigning your Tokens. Please wait..." [txHash]="tokenAssignHash"></token-wait>
+    </div>
+    <div *ngIf="loadingTokens">
+      <token-wait waitMessage="Loading. Please wait..."></token-wait>
+    </div>
+  </form>
+</section>

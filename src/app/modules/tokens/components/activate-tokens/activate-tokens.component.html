@@ -1,0 +1,24 @@
+<section>
+  <progress-indicator count="3" step="2"></progress-indicator>
+  <h2><strong>Token Setup - Step 2:</strong> Activate Tokens</h2>
+  <span class="sub-header">Upload Corporate Documents</span>
+  <form name="activateTokens" #activateTokens="ngForm">
+    <div *ngIf="!loadingTokens && token">
+      <h3>Articles of Incorporation</h3>
+      <document-upload [fileId]="'artOfInc'" (fileChange)="artOfIncUploaded($event)" (onActivate)="onActivate($event)" [uploadedDocument]="token.articles_of_incorporation" [companyId]="companyId"></document-upload>
+      <h3>Corporate By-Laws</h3>
+      <document-upload [fileId]="'corpByLaws'" (fileChange)="corpByLawsUploaded($event)" (onActivate)="onActivate($event)" [uploadedDocument]="token.corporate_by_laws" [companyId]="companyId"></document-upload>
+      <h3>Board of Directors Agreement</h3>
+      <document-upload [fileId]="'bodAgree'" (fileChange)="bodAgreeUploaded($event)" (onActivate)="onActivate($event)" [uploadedDocument]="token.board_of_directors_agreement" [companyId]="companyId"></document-upload>
+      <div class="clearfix buttons-container">
+        <div class="pull-right">
+          <!--<button class="btn btn-primary" [disabled]="!allDocsVerified()" (click)="doActivateTokens(activateTokens.form)">All Verified - Activate Tokens Now</button>-->
+          <button class="btn btn-primary" [disabled]="!docs.articles_of_incorporation && !docs.corporate_by_laws && !docs.board_of_directors_agreement" (click)="doVerifyDocs()">Verify Documents</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="loadingTokens">
+      <token-wait waitMessage="Loading. Please wait..."></token-wait>
+    </div>
+  </form>
+</section>

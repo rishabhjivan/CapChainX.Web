@@ -1,0 +1,32 @@
+<div class="sales-indicator">
+  <div class="completion-bar" [ngStyle]="{'width':progressPct+'%'}" [ngClass]="{'in-progress': status=='in progress', 'completed': status=='completed'}" *ngIf="status=='completed' || status=='in progress'"></div>
+  <div class="sales-step sales-start-step" [ngClass]="{'inactive': !status || (status!='completed' && status!='in progress'), 'active': status=='completed' || status=='in progress'}">
+    <div class="relative-wrapper">
+      <div class="text-display" *ngIf="startDate && (status=='completed' || status=='in progress')">
+        {{startDate | shortDate}}
+      </div>
+      <div class="text-display" *ngIf="!startDate || (status!='completed' && status!='in progress')">
+        START
+      </div>
+    </div>
+  </div>
+  <div class="sales-step sales-mid-step" *ngIf="status=='in progress' && progressPct && progressPct > 0 && progressPct < 100" [ngStyle]="{'left':progressPct+'%'}">
+    <div class="relative-wrapper">
+      <div class="text-display">
+        {{today | shortDate}}
+      </div>
+    </div>
+    <div class="triangle"></div>
+  </div>
+  <div class="sales-step sales-end-step" [ngClass]="{'inactive': status!='completed' && status!='in progress', 'active': status=='in progress', 'completed': status=='completed'}">
+    <i class="fa fa-check"></i>
+    <div class="relative-wrapper">
+      <div class="text-display" *ngIf="endDate && (status=='completed' || status=='in progress')">
+        {{endDate | shortDate}}
+      </div>
+      <div class="text-display" *ngIf="!endDate || (status!='completed' && status!='in progress')">
+        END
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+.sprite {
+  background: url(assets/images/sprite.png) no-repeat;
+  &.sprite-empty-state {
+    background-position: 0 0;
+    width: 363px;
+    height: 211px;
+  }
+  &.sprite-const-price {
+    background-position: -363px 0;
+    width: 98px;
+    height: 103px;
+  }
+  &.sprite-expo-price {
+    background-position: -462px 0;
+    width: 120px;
+    height: 103px;
+  }
+  &.sprite-tiered-price {
+    background-position: -584px 0;
+    width: 139px;
+    height: 103px;
+  }
+  &.sprite-metamask {
+    background-position: -724px 0;
+    width: 65px;
+    height: 61px;
+  }
+  &.sprite-ledger {
+    background-position: -790px -1px;
+    width: 61px;
+    height: 61px;
+  }
+  &.sprite-metamask-transfer {
+    background-position: -724px -133px;
+    width: 245px;
+    height: 69px;
+  }
+  &.sprite-ledger-transfer {
+    background-position: -726px -62px;
+    width: 241px;
+    height: 69px;
+  }
+  &.sprite-to-ledger-transfer {
+    background-position: -726px -203px;
+    width: 241px;
+    height: 69px;
+  }
+  &.sprite-trx {
+    width: 38px;
+    height: 38px;
+    &.tokens-sent {
+      background-position: -363px -108px;
+    }
+    &.tokens-received {
+      background-position: -402px -108px;
+    }
+    &.eth-sent {
+      background-position: -441px -108px;
+    }
+    &.eth-received {
+      background-position: -480px -108px;
+    }
+    &.send-progress {
+      background-position: -519px -108px;
+    }
+    &.receive-progress {
+      background-position: -558px -108px;
+    }
+  }
+  &.sprite-check, &.sprite-success {
+    width: 50px;
+    height: 51px;
+    background-position: -364px -148px;
+  }
+  &.sprite-ledger-confirm {
+    width: 187px;
+    height: 76px;
+    background-position: -415px -148px;
+  }
+  &.sprite-qrcode {
+    width: 18px;
+    height: 18px;
+    background-position: -364px -226px;
+  }
+  &.sprite-link {
+    width: 22px;
+    height: 22px;
+    background-position: -383px -226px;
+  }
+  &.sprite-copy {
+    width: 20px;
+    height: 23px;
+    background-position: -406px -226px;
+  }
+  &.sprite-contract {
+    width: 20px;
+    height: 20px;
+    background-position: -427px -226px;
+  }
+  &.sprite-cross, &.sprite-error {
+    width: 50px;
+    height: 51px;
+    background-position: -448px -226px;
+  }
+  &.sprite-warning {
+    width: 50px;
+    height: 48px;
+    background-position: -499px -226px;
+  }
+}

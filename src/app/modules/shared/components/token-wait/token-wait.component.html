@@ -1,0 +1,15 @@
+<div class="waiting-box">
+  <div class="center-container text-center form-box">
+    <lottie-animation-view
+      [options]="lottieConfig"
+      [width]="145"
+      [height]="160"
+      (animCreated)="handleAnimation($event)">
+    </lottie-animation-view>
+    <h5 class="font-light">{{waitMessage}}</h5>
+    <h5 class="font-light" *ngIf="txHash">
+      or<br />View detailed progress in Etherscan<br />
+      <div class="scan-link-wrapper"><a class="scan-link no-wrap middle-container" [href]="getEtherScanLink()" target="_blank">{{getEtherScanLink()}}</a></div>
+    </h5>
+  </div>
+</div>

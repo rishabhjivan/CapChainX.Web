@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">A friendly reminder, have your crypto wallet ready!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body">
+  <p class="sub-header">Follow these steps before proceeding</p>
+  <div class="sink-1">
+    <ol>
+      <!--<li>This platform supports Metamask and Ledger Nano S</li>
+      <li>Make sure you have any of them ready before we proceed</li>
+      <li>If you don’t have these wallets, you can get them through the following links:
+        <ol type="a">
+          <li>Ledger Nano S (<a href="https://www.ledgerwallet.com/products/ledger-nano-s">https://www.ledgerwallet.com/products/ledger-nano-s</a>)</li>
+          <li>Metamask (<a href="https://metamask.io/">https://metamask.io/</a>)</li>
+        </ol>
+      </li>-->
+      <li>
+        This version of the platform only supports Ledger Nano S
+        <em class="block">** Support for other wallets will be available soon on our future releases **</em>
+      </li>
+      <li>Make sure you have it ready before we proceed</li>
+      <li>If you don’t have Ledger Nano S, you can order one through the following link:
+        <!--<ol type="a">
+          <li>Ledger Nano S (<a href="https://www.ledgerwallet.com/products/ledger-nano-s" target="_blank">https://www.ledgerwallet.com/products/ledger-nano-s</a>)</li>
+          <li>Metamask (<a href="https://metamask.io/" target="_blank">https://metamask.io/</a>)</li>
+        </ol>-->
+        <a class="block" href="https://www.ledgerwallet.com/products/ledger-nano-s" target="_blank">https://www.ledgerwallet.com/products/ledger-nano-s</a>
+      </li>
+    </ol>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="activeModal.close()">I have it ready. Let's Go!</button>
+</div>

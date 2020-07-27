@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">{{modalTitle}}</h4>
+  <button *ngIf="showClose" type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body text-center" [innerHTML]="bodyHtml">
+</div>
+<div class="modal-footer text-center">
+  <button type="button" class="btn btn-tertiary" (click)="activeModal.close(false)" *ngIf="leftBtnLabel">{{leftBtnLabel}}</button>
+  <button type="button" class="btn btn-primary" (click)="activeModal.close(true)">{{rightBtnLabel}}</button>
+  <div class="m-t-10" *ngIf="orLinkLabel">
+    or&nbsp;<a class="" href="javascript:void(0);" (click)="activeModal.close(false)">{{orLinkLabel}}</a>
+  </div>
+</div>

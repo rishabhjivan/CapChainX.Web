@@ -1,0 +1,18 @@
+<div class="modal-header">
+  <h4 class="modal-title" *ngIf="currency!='ETH'">Receive {{currency}} tokens</h4>
+  <h4 class="modal-title" *ngIf="currency=='ETH'">Receive Ether</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+    <span aria-hidden="true"><i class="fa fa-times"></i></span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="sub-header text-center">Scan QR Code</div>
+  <div class="text-center"><iframe [src]="'https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + walletAddr + '&choe=UTF-8' | safe" width="200" height="200" frameborder="0"></iframe></div>
+  <label for="walletAddr" class="sub-header">Or Copy Your Account Address</label>
+  <div class="input-group">
+    <input type="text" name="walletAddr" class="form-control text-bold" [ngClass]="{'text-blue': currency=='ETH', 'text-green': currency!='ETH'}" id="walletAddr" readonly [value]="walletAddr">
+    <div class="input-group-append">
+      <button ngxClipboard [cbContent]="walletAddr" (cbOnSuccess)="onAddrCopied()" class="btn input-group-btn" [ngClass]="{'btn-primary': currency=='ETH', 'btn-secondary': currency!='ETH'}"><i class="far fa-copy"></i></button>
+    </div>
+  </div>
+</div>

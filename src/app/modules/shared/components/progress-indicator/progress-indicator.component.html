@@ -1,0 +1,6 @@
+<div class="progress-indicator">
+  <div class="completion-bar" [ngStyle]="{'width': (step-1) * (100 / (count - 1)) + '%'}"></div>
+  <div *ngFor="let s of stepArray" class="progress-step" [ngClass]="{'active':s.step==step,'completed':s.step<step}" [ngStyle]="{'left': s.posleft + '%'}">
+    <i class="fa" [ngClass]="{'fa-check':s.step<step}"></i>
+  </div>
+</div>

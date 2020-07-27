@@ -1,0 +1,20 @@
+span {
+  &.title {
+    font-size: 20px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    padding-bottom: 5px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+}
+.row {
+  margin-bottom: 10px;
+}
+input, textarea, .dropdown {
+  margin-bottom: 10px;
+}

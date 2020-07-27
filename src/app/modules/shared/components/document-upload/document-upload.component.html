@@ -1,0 +1,26 @@
+<div class="form-group row">
+  <label for="" class="col-md-3 col-form-label">Upload File</label>
+  <div class="col-md-9">
+    <div class="custom-file" *ngIf="uploadedDocument.status==getStatusLabel('NOT_YET_UPLOADED') || uploadedDocument.status==getStatusLabel('REJECTED')">
+      <input type="file" (change)="fileEvent($event)" class="custom-file-input" [id]="fileId">
+      <label class="custom-file-label" [for]="fileId">&nbsp;</label>
+      <file-drop (onFileDrop)="dropped($event)">
+        <span>{{ uploadedDocument.name || 'or Drag &amp; Drop File here' }}</span>
+      </file-drop>
+    </div>
+    <label class="alert alert-success" *ngIf="uploadedDocument.status==getStatusLabel('VERIFIED')">{{uploadedDocument.name}}</label>
+    <label class="alert alert-info" *ngIf="uploadedDocument.status==getStatusLabel('IN_PROGRESS')">{{uploadedDocument.name}}</label>
+  </div>
+</div>
+<div class="form-group row">
+  <label for="status-{{fileId}}" class="col-md-3 col-form-label">Status</label>
+  <div class="col-md-9">
+    <div class="spinner" *ngIf="uploading"><message-spinner message="Please wait"></message-spinner></div>
+    <span id="status-{{fileId}}" class="validation-feedback empty static-text" *ngIf="!uploading && (uploadedDocument.status==getStatusLabel('NOT_YET_UPLOADED') || uploadedDocument.status==getStatusLabel('REJECTED')) && uploadedDocument.path">Please click "Verify Documents" below to upload for verification.</span>
+    <span id="status-{{fileId}}" class="validation-feedback empty static-text" *ngIf="!uploading && uploadedDocument.status==getStatusLabel('NOT_YET_UPLOADED') && !uploadedDocument.path">Not yet uploaded</span>
+    <span id="status-{{fileId}}" class="validation-feedback valid static-text" *ngIf="!uploading && uploadedDocument.status==getStatusLabel('VERIFIED')">Verified and Accepted</span>
+    <span id="status-{{fileId}}" class="validation-feedback invalid static-text" *ngIf="!uploading && uploadedDocument.status==getStatusLabel('REJECTED') && !uploadedDocument.path">Rejected. Please re-upload</span>
+    <span id="status-{{fileId}}" class="validation-feedback inprogress static-text" *ngIf="!uploading && uploadedDocument.status==getStatusLabel('IN_PROGRESS')">Verification in Progress (ETA 2 days)</span>
+    <!--<button class="btn btn-primary pull-right" *ngIf="uploadedDocument.status==getStatusLabel('NOT_YET_UPLOADED') || uploadedDocument.status==getStatusLabel('REJECTED')" [disabled]="!uploadedDocument || !uploadedDocument.name" (click)="activateDoc()">Verify</button>-->
+  </div>
+</div>

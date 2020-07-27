@@ -1,0 +1,49 @@
+@font-face {
+  font-family: BarlowSemiCondensed-Regular;
+  src: url("assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Regular.ttf");
+}
+@font-face {
+  font-family: BarlowSemiCondensed-Light;
+  src: url("assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Light.ttf");
+}
+@font-face {
+  font-family: BarlowSemiCondensed-Medium;
+  src: url("assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Medium.ttf");
+}
+@font-face {
+  font-family: BarlowSemiCondensed-Bold;
+  src: url("assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-Bold.ttf");
+}
+@font-face {
+  font-family: BarlowSemiCondensed-SemiBold;
+  src: url("assets/fonts/Barlow_Semi_Condensed/BarlowSemiCondensed-SemiBold.ttf");
+}
+@font-face {
+  font-family: Lato-Light;
+  src: url("assets/fonts/Lato/Lato-Light.ttf");
+}
+@font-face {
+  font-family: Lato-Regular;
+  src: url("assets/fonts/Lato/Lato-Regular.ttf");
+}
+@font-face {
+  font-family: Lato-Bold;
+  src: url("assets/fonts/Lato/Lato-Bold.ttf");
+}
+@font-face {
+  font-family: Lato-Black;
+  src: url("assets/fonts/Lato/Lato-Black.ttf");
+}
+html {
+  font-size: 10px;
+}
+body {
+  font-family: $primary-font, $fallback-font;
+  color: $neutral-shade-1;
+  font-size: 1.6rem;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
